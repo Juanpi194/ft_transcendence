@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: transcendence_user
+      POSTGRES_PASSWORD: transcendence_password
+      POSTGRES_DB: transcendence_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./src
+    container_name: transcendence_backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://transcendence_user:transcendence_password@db:5432/transcendence_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
