@@ -1,0 +1,10 @@
+# Python y entornos virtuales
+__pycache__/
+.venv/
+.python-version
+
+# Variables de entorno y secretos
+.env
+
+# Otras cosas
+.vscode
