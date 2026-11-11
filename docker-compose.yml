@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./src
+    build: ./backend
     container_name: transcendence_backend
     restart: always
     environment:

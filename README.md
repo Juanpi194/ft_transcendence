@@ -140,3 +140,10 @@ Y la variable Base es como la traducción de las clases que nosotros hagamos (de
 Por último, la función get_db devuelve una sesión para conectarse a la base de datos, y ahí poder interactuar con ella.
 
 **Corrección**: Sobre SessionLocal: No representa exactamente a "un usuario conectándose", sino más bien a una mesa de trabajo temporal (o un ticket de transacción) que se abre para una tarea concreta. Un mismo usuario que entre a la web puede abrir varias sesiones distintas a lo largo de su navegación (por ejemplo, una sesión para registrarse, otra para enviar un mensaje y otra para actualizar su avatar). Es simplemente el espacio de trabajo aislado donde hacemos operaciones antes de guardarlas definitivamente.
+
+### MODELS.PY
+Los distintos modelos de las tablas de la base de datos
+
+### MAIN.PY
+#### Depends
+Función que automatiza la apertura de la conexión del usuario con la base de datos, garantizando que ocurra lo que ocurra, todo se gestione correctamente.
