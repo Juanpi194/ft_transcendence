@@ -9,4 +9,5 @@ dependencies = [
     "psycopg[binary]>=3.3.8",
     "sqlalchemy>=2.0.57",
     "uvicorn>=0.54.0",
+    "webcolors>=25.10.0",
 ]

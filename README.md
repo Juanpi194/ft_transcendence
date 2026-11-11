@@ -83,3 +83,18 @@ curl http://localhost:8000/
 O puedes ir directamente al buscador y buscar http://localhost:8000/
 
 FastAPI genera automaticamente una interfaz gráfica interactiva. Para verla: http://localhost:8000/docs
+
+## ARCHIVOS
+Pequeñas aclaraciones para la lógica de archivos importantes
+### DATABASE.PY
+Tenemos la constante con la ruta de la base de datos, que consiste basicamente en: postgresql indica que la base de datos la maneja postgre, transcende_user es el usuario que se va a conectar, transcendence_password es la contraseña de este usuario, se va a conectar a la base de datos que está en el contenedor db, a través del puerto 5432, a la base de datos llamada transcendence_db. Eso es lo que he entendido de esa variable, que es un poco la misma lógica que usamos en el Docker.
+
+Después, engine es la conexión entre la aplicación y el contenedor, es decir, la conexión con la base de datos.
+
+Después, SessionLocal es el concepto de una sesión, un usuario conectándose. Hemos especificado que los cambios no serán confirmados automaticamente, y lo hemos enlazado con la conexión entre la aplicación y el contendor (engine)
+
+Y la variable Base es como la traducción de las clases que nosotros hagamos (deduzco que heredando de ella) a tablas para PostgreSQL.
+
+Por último, la función get_db devuelve una sesión para conectarse a la base de datos, y ahí poder interactuar con ella.
+
+**Corrección**: Sobre SessionLocal: No representa exactamente a "un usuario conectándose", sino más bien a una mesa de trabajo temporal (o un ticket de transacción) que se abre para una tarea concreta. Un mismo usuario que entre a la web puede abrir varias sesiones distintas a lo largo de su navegación (por ejemplo, una sesión para registrarse, otra para enviar un mensaje y otra para actualizar su avatar). Es simplemente el espacio de trabajo aislado donde hacemos operaciones antes de guardarlas definitivamente.
