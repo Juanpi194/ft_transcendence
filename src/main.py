@@ -7,7 +7,6 @@ app = FastAPI(title="Transcendence API")
 def read_root() -> dict[str, str]:
     return {"message": "¡Hola desde el backend de ft-transcendence!"}
 
-
 def main() -> None:
     print("Hello from src!")
 
