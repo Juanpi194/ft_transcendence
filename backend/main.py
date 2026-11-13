@@ -24,11 +24,3 @@ def register_user(username: str, email: str,
     db.commit()
     db.refresh(new_user)
     return {"message": f"New user {new_user.username} was created!"}
-
-
-def main() -> None:
-    print("Hello from src!")
-
-
-if __name__ == "__main__":
-    main()
