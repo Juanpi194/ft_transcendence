@@ -101,3 +101,6 @@ Los distintos modelos de las tablas de la base de datos
 ### MAIN.PY
 #### Depends
 Función que automatiza la apertura de la conexión del usuario con la base de datos, garantizando que ocurra lo que ocurra, todo se gestione correctamente.
+
+## ALEMBIC
+Gestiona modificaciones en las tablas de SQL. Genera migraciones (cambios en las tablas para no perder los datos ya existentes). El nombre de la carpeta y el .ini que lo gestiona es migrations/ y alembic.ini
