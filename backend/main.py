@@ -4,7 +4,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 from src.database import get_db
 from src.models import User
-from src.core import API_NAME
+from src.core.constants import API_NAME
 
 app = FastAPI(title=API_NAME)
 

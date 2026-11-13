@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
-from .core import USERNAME_MIN_LEN, USERNAME_MAX_LEN, \
+
+from .core.constants import USERNAME_MIN_LEN, USERNAME_MAX_LEN, \
     PASSWORD_MIN_LEN
 
 
