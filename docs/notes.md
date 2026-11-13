@@ -104,3 +104,22 @@ Función que automatiza la apertura de la conexión del usuario con la base de d
 
 ## ALEMBIC
 Gestiona modificaciones en las tablas de SQL. Genera migraciones (cambios en las tablas para no perder los datos ya existentes). El nombre de la carpeta y el .ini que lo gestiona es migrations/ y alembic.ini
+### alembic.ini
+Donde pone "*here*" es lo mismo que la ruta donde está el *.ini*.
+Los archivos generados por alembic indican los cambios que se han realizado en las tablas.
+### env.py
+Todo ese archivo es generado por el comando alembic init *name*. Hay que modificar ciertas cosas para que se adapte a nuestra versión.
+#### Librerías estandar
+- fileConfig: lee la parte de logging del alembic.ini (qué mensajes se muestran por la terminal). Ya venía en la plantilla.
+#### Librerías externas
+- context: el objeto de Alembic a través del cual le das la configuración y le dices "ejecuta las migraciones". Ya venía en la plantilla.
+- create_engine: Como en database.py para crear la conexión. Sustituye a engine_from_config de la plantilla, que leía la URL del .ini.
+- pool: de aquí sacaremos NullPool
+#### Librerías internas (código)
+- settings: de aquí sale la URL de la base de datos.
+- Base: de aquí sale "cómo deberían ser las tablas".
+- models: parece que no se usa, pero es imprescindible. Una clase como User solo se registra en Base cuando se ejecuta su archivo, es decir, cuando se importa. Si nadie importa models.py, Alembic ve un Base vacío, cree que no quieres ninguna tabla y genera una migración que las borra todas. El *noqa: F401* le dice al linter "sé que este import parece sin usar, no lo marques". El resto del comentario explica a quien lo lea por qué está ahí.
+### Comandos
+alembic upgrade head --sql
+Para ver los cambios que se aplicarían sin aplicarlos de verdad (gracias a la función **run_migrations_offline**, de *env.py*)
+Ejecutarlo sin --sql es el modo online, y por lo tanto se aplicaría.
