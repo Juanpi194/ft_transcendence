@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from typing import Generator
+import os
 
-# +psycopg tells to postgre that the version i have installed is the one to use
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg://transcendence_user:transcendence_password@db:5432/transcendence_db"
+SQLALCHEMY_DATABASE_URL = os.environ["DATABASE_URL"]
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

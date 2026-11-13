@@ -1,10 +1,7 @@
 services:
   db:
     image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: transcendence_user
-      POSTGRES_PASSWORD: transcendence_password
-      POSTGRES_DB: transcendence_db
+    env_file: .env
     ports:
       - "5432:5432"
     volumes:
@@ -15,7 +12,7 @@ services:
     container_name: transcendence_backend
     restart: always
     environment:
-      - DATABASE_URL=postgresql+psycopg://transcendence_user:transcendence_password@db:5432/transcendence_db
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       - "8000:8000"
     depends_on:
