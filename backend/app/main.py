@@ -2,9 +2,9 @@ from fastapi import FastAPI
 
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from src.database import get_db
-from src.models import User
-from src.core.constants import API_NAME
+from app.database import get_db
+from app.models import User
+from app.core.constants import API_NAME
 
 app = FastAPI(title=API_NAME)
 
