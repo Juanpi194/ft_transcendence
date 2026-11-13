@@ -1,11 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from typing import Generator
-import os
 
-SQLALCHEMY_DATABASE_URL = os.environ["DATABASE_URL"]
+from .core.config import settings
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+engine = create_engine(str(settings.database_url))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
