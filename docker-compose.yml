@@ -17,7 +17,7 @@ services:
     container_name: transcendence_backend
     restart: always
     environment:
-      - DATABASE_URL=postgresql://transcendence_user:transcendence_password@db:5432/transcendence_db
+      - DATABASE_URL=postgresql+psycopg://transcendence_user:transcendence_password@db:5432/transcendence_db
     ports:
       - "8000:8000"
     depends_on:
