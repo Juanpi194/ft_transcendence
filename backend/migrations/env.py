@@ -30,7 +30,10 @@ target_metadata = Base.metadata
 
 
 def get_database_url() -> str:
-    """Return the database URL from the app settings, never from alembic.ini."""
+    """
+    Return the database URL from the app settings,
+    never from alembic.ini.
+    """
     return str(settings.database_url)
 
 
