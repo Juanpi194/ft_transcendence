@@ -5,8 +5,8 @@ Each class represents a SQL table
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
 
-from .database import Base
-from .core.constants import USERNAME_MAX_LEN, EMAIL_MAX_LEN, \
+from ..database import Base
+from ..core.constants import USERNAME_MAX_LEN, EMAIL_MAX_LEN, \
     HASHED_PASSWORD_MAX_LEN, DEFAULT_AVATAR, URL_MAX_LEN
 
 
