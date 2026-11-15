@@ -17,6 +17,16 @@ No lo entiendo la verdad.
 Es como una especie de login en la página postgresql, concretamente al servidor db. Una vez nos hemos logeado, tendríamos que indicarle a qué base de datos concreta queremos conectarnos, que en este caso es transcendence_db.
 - **Explicación de GEMINI**:
 Es como abrir la puerta del "edificio" de PostgreSQL usando tus llaves (usuario y contraseña), entrar al servidor que está en db:5432, y sentarte directamente en la mesa de trabajo (la base de datos) llamada transcendence_db
+### Enlace de carpetas
+En lugar de copiar todos los archivos para la imagen, usamos un enlazado de carpetas.
+Para desarrollo, mantener el enlace. Corresponde a esta linea:
+- ./backend:/app
+Significa que la carpeta backend de mi equipo es la misma carpeta app del contenedor, ignorando el COPY . . del Dockerfile (el enlaza lo tapa en el contenedor).
+Para producción, borrar esa linea y hacer la copia.
+
+Y esta linea:
+- /app/.venv
+indica que no se haga enlaze de esa ruta. Para que el contenedor no use el venv del equipo, sino del contenedor.
 
 ## DOCKERFILE
 Lo que haya en el *.dockerignore* no se copiará. Necesario para no copiar un venv no deseado por ejemplo.
@@ -120,6 +130,31 @@ Todo ese archivo es generado por el comando alembic init *name*. Hay que modific
 - Base: de aquí sale "cómo deberían ser las tablas".
 - models: parece que no se usa, pero es imprescindible. Una clase como User solo se registra en Base cuando se ejecuta su archivo, es decir, cuando se importa. Si nadie importa models.py, Alembic ve un Base vacío, cree que no quieres ninguna tabla y genera una migración que las borra todas. El *noqa: F401* le dice al linter "sé que este import parece sin usar, no lo marques". El resto del comentario explica a quien lo lea por qué está ahí.
 ### Comandos
+```bash
 alembic upgrade head --sql
+```
 Para ver los cambios que se aplicarían sin aplicarlos de verdad (gracias a la función **run_migrations_offline**, de *env.py*)
 Ejecutarlo sin --sql es el modo online, y por lo tanto se aplicaría.
+
+```bash
+docker compose exec --user $(id -u):$(id -g) backend alembic revision --autogenerate -m "create users table"
+```
+(El mensaje descriptivo porfa :D)
+
+Explicación por partes:
+- docker compose exec: Ejecuta un comando dentro de un contenedor que ya está en marcha.
+- --user $(id -u):$(id -g): Con qué usuario se ejecuta ese comando.
+- backend: En qué servicio (contenedor) se ejecuta.
+- alembic revision: Crea un archivo de migración nuevo.
+- --autogenerate: Rellena el archivo comparando tus modelos con la base de datos.
+- -m "message": El mensaje, que daemás forma parte del nombre del archivo.
+
+Tabla con mejores explicaciones que las mías:
+| Comando | Qué hace |
+|---|---|
+| `docker compose exec --user $(id -u):$(id -g) backend alembic revision --autogenerate -m "mensaje"` | **Crea** el archivo de migración comparando los modelos con la base. No toca la base. El `--user` hace que el archivo sea tuyo y no de root. |
+| `docker compose exec backend alembic history` | Lista las migraciones que Alembic ve, en orden. |
+| `docker compose exec backend alembic current` | Dice en qué migración está la base de datos ahora. |
+| `docker compose exec backend alembic upgrade head --sql` | Muestra el SQL que se ejecutaría, sin aplicarlo (modo offline). |
+| `docker compose exec backend alembic upgrade head` | **Aplica** las migraciones pendientes a la base de datos (modo online). |
+| `docker compose exec backend alembic downgrade -1` | Deshace la última migración. |
