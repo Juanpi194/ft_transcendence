@@ -149,7 +149,7 @@ Explicación por partes:
 - --autogenerate: Rellena el archivo comparando tus modelos con la base de datos.
 - -m "message": El mensaje, que daemás forma parte del nombre del archivo.
 
-Tabla con mejores explicaciones que las mías:
+Tabla con mejores explicaciones que las mías :(:
 | Comando | Qué hace |
 |---|---|
 | `docker compose exec --user $(id -u):$(id -g) backend alembic revision --autogenerate -m "mensaje"` | **Crea** el archivo de migración comparando los modelos con la base. No toca la base. El `--user` hace que el archivo sea tuyo y no de root. |
@@ -158,3 +158,14 @@ Tabla con mejores explicaciones que las mías:
 | `docker compose exec backend alembic upgrade head --sql` | Muestra el SQL que se ejecutaría, sin aplicarlo (modo offline). |
 | `docker compose exec backend alembic upgrade head` | **Aplica** las migraciones pendientes a la base de datos (modo online). |
 | `docker compose exec backend alembic downgrade -1` | Deshace la última migración. |
+
+#### Retroceder y avanzar migraciones
+
+Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
+
+| Comando | Qué hace |
+|---|---|
+| `docker compose exec backend alembic current` | Dice en qué migración está la base de datos ahora. Sin salida = base vacía (sin migraciones aplicadas). |
+| `docker compose exec backend alembic downgrade -1` | Deshace **una** migración (ejecuta su `downgrade()`). |
+| `docker compose exec backend alembic upgrade +1` | Aplica **una** migración pendiente. |
+| `docker compose exec backend alembic upgrade head` | Aplica **todas** las migraciones pendientes hasta la última. |
