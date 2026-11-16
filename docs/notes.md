@@ -169,3 +169,11 @@ Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
 | `docker compose exec backend alembic downgrade -1` | Deshace **una** migración (ejecuta su `downgrade()`). |
 | `docker compose exec backend alembic upgrade +1` | Aplica **una** migración pendiente. |
 | `docker compose exec backend alembic upgrade head` | Aplica **todas** las migraciones pendientes hasta la última. |
+
+### Pendiente
+1. **Añadir una columna** al modelo y repetir el ciclo completo (modelo → `revision --autogenerate` → leer el archivo → `upgrade head` → commit). Es la práctica más útil.
+2. **Automatizar** los comandos de Alembic (Makefile o script con subcomandos). Hacerlo ya sabiendo lo que hace cada comando.
+3. **`datetime.utcnow`** está deprecado: sustituirlo en el modelo.
+4. **`default=` vs `server_default=`**: los valores por defecto de Python no existen en la base de datos.
+5. **Integrar**: actualizar `main` (va 2 commits por detrás de `origin/main`) y abrir una Pull Request de `feature/models` a `main`.
+6. **Docker**: separar un `docker-compose.override.yml` para desarrollo (enlace de carpetas) y dejar el compose principal listo para producción. Y que el contenedor no corra como root (los `__pycache__` de root).
