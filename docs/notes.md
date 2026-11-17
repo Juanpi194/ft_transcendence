@@ -159,6 +159,20 @@ Tabla con mejores explicaciones que las mías :(:
 | `docker compose exec backend alembic upgrade head` | **Aplica** las migraciones pendientes a la base de datos (modo online). |
 | `docker compose exec backend alembic downgrade -1` | Deshace la última migración. |
 
+Comando para entrar en la base de datos:
+```bash
+docker compose exec db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+```
+Comandos útiles una vez estás dentro:
+- \dt: Lista las tablas de la base de datos.
+- \d *users*: Describe una tabla, en este caso, *users*
+- SELECT * FROM users: Muestra las filas (los datos) de la tabla, en este caso, de *users*
+- \q: Salir de psql
+
+La diferencia entre el parámetro *default* y *server_default* en las tablas es que *default* **no acepta parámetro por defecto**
+si la inserción es directamente desde SQL, y *server_default* **sí permite no dar esos valores** para rellenarlos con el valor
+por defecto.
+
 #### Retroceder y avanzar migraciones
 
 Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
@@ -171,9 +185,6 @@ Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
 | `docker compose exec backend alembic upgrade head` | Aplica **todas** las migraciones pendientes hasta la última. |
 
 ### Pendiente
-1. **Añadir una columna** al modelo y repetir el ciclo completo (modelo → `revision --autogenerate` → leer el archivo → `upgrade head` → commit). Es la práctica más útil.
-2. **Automatizar** los comandos de Alembic (Makefile o script con subcomandos). Hacerlo ya sabiendo lo que hace cada comando.
-3. **`datetime.utcnow`** está deprecado: sustituirlo en el modelo.
-4. **`default=` vs `server_default=`**: los valores por defecto de Python no existen en la base de datos.
-5. **Integrar**: actualizar `main` (va 2 commits por detrás de `origin/main`) y abrir una Pull Request de `feature/models` a `main`.
-6. **Docker**: separar un `docker-compose.override.yml` para desarrollo (enlace de carpetas) y dejar el compose principal listo para producción. Y que el contenedor no corra como root (los `__pycache__` de root).
+1. **Automatizar** los comandos de Alembic (Makefile o script con subcomandos). Hacerlo ya sabiendo lo que hace cada comando.
+2. **Integrar**: actualizar `main` (va 2 commits por detrás de `origin/main`) y abrir una Pull Request de `feature/models` a `main`.
+3. **Docker**: separar un `docker-compose.override.yml` para desarrollo (enlace de carpetas) y dejar el compose principal listo para producción. Y que el contenedor no corra como root (los `__pycache__` de root).
