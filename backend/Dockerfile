@@ -8,7 +8,7 @@ ARG APP_USER=appuser
 ARG APP_UID=1000
 
 # 2. Copiamos el binario de 'uv' desde su imagen oficial (basicamente instalamos uv en el contenedor)
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.13.9 /uv /bin/uv
 
 # 3. Creamos y nos situamos en una carpeta de trabajo dentro del contenedor
 WORKDIR /app
