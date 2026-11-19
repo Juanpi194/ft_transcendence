@@ -137,17 +137,18 @@ Para ver los cambios que se aplicarían sin aplicarlos de verdad (gracias a la f
 Ejecutarlo sin --sql es el modo online, y por lo tanto se aplicaría.
 
 ```bash
-docker compose exec --user $(id -u):$(id -g) backend alembic revision --autogenerate -m "create users table"
+alembic revision --autogenerate -m "create users table"
 ```
+
 (El mensaje descriptivo porfa :D)
 
 Explicación por partes:
-- docker compose exec: Ejecuta un comando dentro de un contenedor que ya está en marcha.
-- --user $(id -u):$(id -g): Con qué usuario se ejecuta ese comando.
-- backend: En qué servicio (contenedor) se ejecuta.
 - alembic revision: Crea un archivo de migración nuevo.
 - --autogenerate: Rellena el archivo comparando tus modelos con la base de datos.
 - -m "message": El mensaje, que daemás forma parte del nombre del archivo.
+
+## Comandos Docker generales
+Cómo ejecutar los comandos en este proyecto. Los comandos de esta guía se ejecutan dentro del contenedor, anteponiendo docker compose exec backend. Por ejemplo, alembic current se escribe docker compose exec backend alembic current. Si el comando crea archivos en tu carpeta (como alembic revision), añade --user $(id -u):$(id -g) para que los archivos sean tuyos y no de root.
 
 Tabla con mejores explicaciones que las mías :(:
 | Comando | Qué hace |
@@ -186,5 +187,3 @@ Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
 
 ### Pendiente
 1. **Automatizar** los comandos de Alembic (Makefile o script con subcomandos). Hacerlo ya sabiendo lo que hace cada comando.
-2. **Integrar**: actualizar `main` (va 2 commits por detrás de `origin/main`) y abrir una Pull Request de `feature/models` a `main`.
-3. **Docker**: separar un `docker-compose.override.yml` para desarrollo (enlace de carpetas) y dejar el compose principal listo para producción. Y que el contenedor no corra como root (los `__pycache__` de root).
