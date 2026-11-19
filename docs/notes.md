@@ -185,8 +185,5 @@ Se ejecutan dentro del contenedor, desde cualquier carpeta del proyecto.
 | `docker compose exec backend alembic upgrade +1` | Aplica **una** migración pendiente. |
 | `docker compose exec backend alembic upgrade head` | Aplica **todas** las migraciones pendientes hasta la última. |
 
-### Usuario del contenedor
-Si tu usuario no es el 1000 (id -u), cambia APP_UID, en el Dockerfile del backend.
-
 ### Pendiente
 1. **Automatizar** los comandos de Alembic (Makefile o script con subcomandos). Hacerlo ya sabiendo lo que hace cada comando.
