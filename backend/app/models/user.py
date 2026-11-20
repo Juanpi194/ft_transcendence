@@ -23,4 +23,5 @@ class User(Base):
     avatar_url = Column(String(URL_MAX_LEN),
                         default=DEFAULT_AVATAR)
     is_active = Column(Boolean, server_default=text("true"), nullable=False)
+    is_private = Column(Boolean, server_default=text("false"), nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
