@@ -1,27 +1,27 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: transcendence_user
-      POSTGRES_PASSWORD: transcendence_password
-      POSTGRES_DB: transcendence_db
-    ports:
-      - "5432:5432"
+    env_file: .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   backend:
-    build: ./src
+    build: ./backend
     container_name: transcendence_backend
-    restart: always
+    restart: unless-stopped
     environment:
-      - DATABASE_URL=postgresql://transcendence_user:transcendence_password@db:5432/transcendence_db
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   frontend:
     build: ./frontend

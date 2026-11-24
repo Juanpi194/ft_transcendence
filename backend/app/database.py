@@ -1,15 +1,18 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker, Session
+from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session
 from typing import Generator
 
-SQLALCHEMY_DATABASE_URL = "postgresql://transcendence_user:\
-    transcendence_password@db:5432/transcendence_db"
+from .core.config import settings
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+engine = create_engine(str(settings.database_url))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+
+class Base(DeclarativeBase):
+    """Base class for every database model."""
+    pass
 
 
 def get_db() -> Generator[Session, None, None]:
