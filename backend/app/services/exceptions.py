@@ -16,3 +16,15 @@ class BlockedError(SocialError):
 
 class AlreadyFollowingError(SocialError):
     pass
+
+
+class NotFollowingError(SocialError):
+    pass
+
+
+class FollowRequestNotFoundError(SocialError):
+    pass
+
+
+class FollowAlreadyAcceptedError(SocialError):
+    pass
