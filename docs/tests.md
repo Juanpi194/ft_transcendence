@@ -15,3 +15,6 @@ uv run python -m pytest -v -x
 
 Para pasar todos los tests cuyo nombre contiene un texto:
 uv run python -m pytest -v -k "insert_text"
+
+Para ver prints se añade la flag -s:
+uv run python -m pytest -v -s
