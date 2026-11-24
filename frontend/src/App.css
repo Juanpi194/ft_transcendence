@@ -182,3 +182,18 @@
     border-right-color: var(--border);
   }
 }
+
+.like-button {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+
+  &[aria-pressed="true"] {
+    color: var(--accent);
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+  }
+}
