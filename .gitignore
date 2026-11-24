@@ -1,6 +1,7 @@
 # Python y entornos virtuales
 __pycache__/
 .venv/
+*.egg-info/
 .python-version
 
 # Variables de entorno y secretos
