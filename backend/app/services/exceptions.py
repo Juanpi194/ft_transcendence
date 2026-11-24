@@ -28,3 +28,11 @@ class FollowRequestNotFoundError(SocialError):
 
 class FollowAlreadyAcceptedError(SocialError):
     pass
+
+
+class AccountAlreadyPublicError(SocialError):
+    pass
+
+
+class AccountAlreadyPrivateError(SocialError):
+    pass
