@@ -36,3 +36,13 @@ class AccountAlreadyPublicError(SocialError):
 
 class AccountAlreadyPrivateError(SocialError):
     pass
+
+
+class SelfBlockError(SocialError):
+    pass
+
+
+class AlreadyBlockedError(SocialError):
+    pass
+
+
