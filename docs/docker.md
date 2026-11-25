@@ -112,3 +112,18 @@ Dos opciones:
 
 - Cambiarla dentro de la base con `ALTER USER` desde `psql`.
 - Recrear la base: `docker compose down -v` (borra el volumen y los datos), `docker compose up -d` y después `alembic upgrade head`.
+
+## Dibujo visual de la estructura
+
+```
+En el contenedor, /app:          En tu equipo, backend/:
+.dockerignore                    .dockerignore
+.venv                            .venv
+Dockerfile                       Dockerfile
+alembic.ini                      alembic.ini
+app          ← el paquete        app          ← el paquete
+migrations                       migrations
+pyproject.toml                   pyproject.toml
+tests                            tests
+uv.lock                          uv.lock
+```

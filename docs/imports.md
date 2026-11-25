@@ -1,4 +1,4 @@
-## backend/src/core/config.py
+## backend/app/core/config.py
 ### PostgresDsn
 Un tipo de dato, como str o int, que solo acepta urls de Postgres **válidas**
 ### BaseSettings
