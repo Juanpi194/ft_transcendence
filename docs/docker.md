@@ -115,6 +115,7 @@ Dos opciones:
 
 ## Dibujo visual de la estructura
 
+```
 En el contenedor, /app:          En tu equipo, backend/:
 .dockerignore                    .dockerignore
 .venv                            .venv
@@ -125,3 +126,4 @@ migrations                       migrations
 pyproject.toml                   pyproject.toml
 tests                            tests
 uv.lock                          uv.lock
+```
